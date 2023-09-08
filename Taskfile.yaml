@@ -1,0 +1,13 @@
+version: 3
+
+tasks:
+  clean:
+    cmd: rm -rf out ; mkdir out
+
+  build:test:tinygo:
+    deps: [clean]
+    cmd: tinygo build -o out/test.wasm -target=wasi ./cmd/test
+
+  build:test:go:
+    deps: [clean]
+    cmd: env GOOS=wasip1 GOARCH=wasm go build -o out/test.wasm ./cmd/test
