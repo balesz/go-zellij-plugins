@@ -1,6 +1,6 @@
 module github.com/balesz/zellij-plugins
 
-go 1.21.0
+go 1.19
 
 require gitlab.com/scabala/zelligo v0.0.0-20230828102631-f59af7a43704
 

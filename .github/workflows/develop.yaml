@@ -1,0 +1,23 @@
+name: development
+on: [push]
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
+        with:
+          go-version: '< 1.20.0'
+      - uses: acifani/setup-tinygo@v1
+        with:
+          tinygo-version: '0.28.1'
+          install-binaryen: 'false'
+      - uses: pnorton5432/setup-task@v1
+        with:
+          task-version: 3.29.1
+      - run: task build:test:tinygo
+      - uses: actions/upload-artifact@v3
+        with:
+          name: test-tinygo.wasm
+          path: out/test.wasm
+          if-no-files-found: warn
