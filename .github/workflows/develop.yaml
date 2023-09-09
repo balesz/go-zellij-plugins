@@ -1,30 +1,30 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
 name: development
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - cmd/**/*.go
+on: [push]
 jobs:
   build-test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-go@v4
+      - name: Install go environment
+        uses: actions/setup-go@v4
         with:
-          go-version: '< 1.20.0'
-      - uses: acifani/setup-tinygo@v1
+          go-version: < 1.20.0
+      - name: Install tinygo environment
+        uses: acifani/setup-tinygo@v1
         with:
-          tinygo-version: '0.28.1'
-          install-binaryen: 'false'
-      - uses: pnorton5432/setup-task@v1
+          tinygo-version: 0.28.1
+          install-binaryen: false
+      - name: Install taskfile build tool
+        uses: pnorton5432/setup-task@v1
         with:
           task-version: 3.29.1
-      - run: task build:test:tinygo
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Build test plugin
+        run: task build:test:tinygo
       - uses: actions/upload-artifact@v3
         with:
-          name: test-tinygo.wasm
+          name: test.wasm
           path: out/test.wasm
           if-no-files-found: warn

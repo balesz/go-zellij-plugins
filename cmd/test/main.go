@@ -18,7 +18,7 @@ func (p *MyPlugin) Load(configuration map[string]string) {
 	})
 }
 
-func (p *MyPlugin) Update(event zelligo.Event) bool {
+func (p *MyPlugin) Update(event *zelligo.Event) bool {
 	fmt.Fprintf(os.Stderr, "log message: %v", event)
 	return true
 }
