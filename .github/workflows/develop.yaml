@@ -1,7 +1,12 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 
 name: development
-on: [push]
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - cmd/**/*.go
 jobs:
   build-test:
     runs-on: ubuntu-latest
