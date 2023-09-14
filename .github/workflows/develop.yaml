@@ -9,22 +9,29 @@ jobs:
       - name: Install go environment
         uses: actions/setup-go@v4
         with:
-          go-version: < 1.20.0
+          go-version: < 1.22.0
       - name: Install tinygo environment
         uses: acifani/setup-tinygo@v1
         with:
-          tinygo-version: 0.28.1
+          tinygo-version: 0.29.0
           install-binaryen: false
       - name: Install taskfile build tool
         uses: pnorton5432/setup-task@v1
         with:
-          task-version: 3.29.1
+          task-version: 3.30.0
       - name: Checkout repo
         uses: actions/checkout@v4
-      - name: Build test plugin
+      - name: Build test plugin with tinygo
         run: task build:test:tinygo
       - uses: actions/upload-artifact@v3
         with:
           name: test.wasm
-          path: out/test.wasm
+          path: out/test-tinygo.wasm
+          if-no-files-found: warn
+      - name: Build test plugin with go
+        run: task build:test:go
+      - uses: actions/upload-artifact@v3
+        with:
+          name: test.wasm
+          path: out/test-go.wasm
           if-no-files-found: warn
