@@ -4,6 +4,7 @@ name: development
 on: [push]
 jobs:
   build-test:
+    name: Build test plugin
     runs-on: ubuntu-latest
     steps:
       - name: Install go environment
@@ -25,13 +26,13 @@ jobs:
         run: task build:test:tinygo
       - uses: actions/upload-artifact@v3
         with:
-          name: test.wasm
-          path: out/test-tinygo.wasm
+          name: test-tinygo.wasm
+          path: out/test.wasm
           if-no-files-found: warn
       - name: Build test plugin with go
         run: task build:test:go
       - uses: actions/upload-artifact@v3
         with:
-          name: test.wasm
-          path: out/test-go.wasm
+          name: test-go.wasm
+          path: out/test.wasm
           if-no-files-found: warn
